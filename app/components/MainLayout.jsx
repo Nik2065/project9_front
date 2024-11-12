@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import {Container, Navbar, Nav, NavDropdown, Form, Button, Row, Col, Table} from 'react-bootstrap'
-
+import { BsHeartFill } from "react-icons/bs";
+import { FaDoorOpen } from "react-icons/fa";
 //import {getShortReport} from '../processors/ApiFunctions.jsx'
 
 
@@ -42,14 +43,21 @@ export default function MainLayout({children}){
 
         <Form>
         <Row>
-          <Col xs="auto">
-            <Button type="button" variant="secondary" >Войти</Button>
+          <Col xs="auto" style={{color:"white", fontSize:"1.2rem"}}>
+            <LinkContainer to="/">
+              <> <BsHeartFill /> Избранное </>
+            </LinkContainer>
+            &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+            <LinkContainer to="/">
+              <><FaDoorOpen /> Войти</>
+            </LinkContainer>
+
           </Col>
         </Row>
       </Form>
       </Container>
 
-      </Navbar>
+    </Navbar>
 
     </header>
 
