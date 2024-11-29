@@ -10,6 +10,12 @@ import { Switch, Routes, Route, Link
 import MainPage from "./pages/MainPage.jsx";
 import MainPage2 from "./pages/MainPage2.jsx";
 import TestPage from "./pages/TestPage.jsx";
+import SignupPage from "./pages/SignupPage.jsx";
+import SignInPage from "./pages/SignInPage.jsx";
+import FavoritePage from "./pages/FavoritePage.jsx";
+
+
+
 
 const Test3Page = () => {
   return (
@@ -21,10 +27,12 @@ function MyRoutes(){
 
     return (
     <Routes>
-        <Route exact path="/main2" element={<MainPage2/>}/>
-
-
         <Route exact path="/" element={<MainPage/>}/>
+        <Route exact path="/main2" element={<MainPage2/>}/>
+        <Route exact path="/signup" element={<SignupPage/>}/>
+        <Route exact path="/signin" element={<SignInPage/>}/>
+        <Route exact path="/fa" element={<FavoritePage/>}/>
+
         <Route exact path="/test" element={<TestPage/>}/>
         <Route exact path="/test2" element={<Test3Page/>}/>
         <Route path="*" element={<NoMatch />} />

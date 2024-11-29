@@ -47,11 +47,14 @@ export default function MainLayout({children}){
             <LinkContainer to="/">
               <> <BsHeartFill /> Избранное </>
             </LinkContainer>
-            &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-            <LinkContainer to="/">
-              <><FaDoorOpen /> Войти</>
+            &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+            <LinkContainer to="/signin">
+              <Button variant="primary"><FaDoorOpen /> Войти</Button>
             </LinkContainer>
-
+            &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+            <LinkContainer title="Создать аккаунт" to="/signup">
+              <Button variant="primary"><FaDoorOpen /> Создать</Button>
+            </LinkContainer>
           </Col>
         </Row>
       </Form>
