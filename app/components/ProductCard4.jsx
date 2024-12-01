@@ -6,7 +6,7 @@ import { ProductCardChart } from './ProductCardChart.jsx';
 
 
 
-export default function ProductCard({title, description, cpu, gpu}) {
+export default function ProductCard4({title, description, cpu, gpu}) {
 
 return (
 <Card>

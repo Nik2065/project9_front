@@ -2,6 +2,8 @@ import React, { Fragment, useState, useEffect } from 'react'
 import {Container, Navbar, Nav, NavDropdown, Form, Button, Row, Col, Table} from 'react-bootstrap'
 import { BsHeartFill } from "react-icons/bs";
 import { FaDoorOpen } from "react-icons/fa";
+import { FaServer  } from "react-icons/fa";
+
 //import {getShortReport} from '../processors/ApiFunctions.jsx'
 
 
@@ -18,8 +20,6 @@ export default function MainLayout({children}){
     useEffect(() => {
       
 
-
-
     }, []);
 
     return(
@@ -27,25 +27,21 @@ export default function MainLayout({children}){
     <header>
     <Navbar className="navbar navbar-expand-lg bg-primary" >
         <Container  >
+          <LinkContainer to="/">
           <Navbar.Brand href="#home">
-            <img
-              alt=""
-              src="/img/logo.svg"
-              width="30"
-              height="30"
-              className="d-inline-block align-top"
-            />{' '}
+            <FaServer style={{color:"white"}} />
             <span style={{color:"white"}}>
-            React Bootstrap
+            &nbsp;&nbsp; Compster
             </span>
           </Navbar.Brand>
+          </LinkContainer>
         
 
         <Form>
         <Row>
           <Col xs="auto" style={{color:"white", fontSize:"1.2rem"}}>
-            <LinkContainer to="/">
-              <> <BsHeartFill /> Избранное </>
+            <LinkContainer to="/fa">
+              <Button variant="primary"> <BsHeartFill /> Избранное </Button>
             </LinkContainer>
             &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
             <LinkContainer to="/signin">
@@ -53,7 +49,7 @@ export default function MainLayout({children}){
             </LinkContainer>
             &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
             <LinkContainer title="Создать аккаунт" to="/signup">
-              <Button variant="primary"><FaDoorOpen /> Создать</Button>
+              <Button variant="primary"><FaDoorOpen /> Регистрация</Button>
             </LinkContainer>
           </Col>
         </Row>
@@ -71,7 +67,11 @@ export default function MainLayout({children}){
 
 
 
-
+        <footer style={{position:"absolute", bottom:"0", width:"100%", height:"60px", lineHeight:"60px", backgroundColor:"grey", boxSizing:"border-box"}}>
+          <Container>
+          <p className='text-center'>SomeText</p>
+          </Container>
+        </footer>
         </>
     );
 

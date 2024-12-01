@@ -40,7 +40,6 @@ function MainPage(){
 
         console.log({result});
 
-
       });
     }
 
