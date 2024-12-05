@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import { Button, Form, Row, Col, Card, Container, Tabs, Tab, FormGroup, FormText   } from 'react-bootstrap';
+import { Button, Form, Row, Col, Card, Container,  FormGroup, FormText   } from 'react-bootstrap';
+import Alert from 'react-bootstrap/Alert';
 
 
 
 import MainLayout from '../components/MainLayout.jsx'
 
 
-
+import {SendSignUpData} from '../processors/ApiFunctions.js'
 
 export default function SignupPage(){
 
@@ -14,26 +15,68 @@ export default function SignupPage(){
 
 
 function SignupFields(){
+
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [alertData, SetAlertData] = useState([false, 'success', '' ]);
+
+    function sendData(){
+    
+        SendSignUpData(email, password)
+        .then(resp => resp.json())
+        .then((result) => {
+            console.log({result});
+
+            if(!result.isError){
+                SetAlertData([true, 'success', result.message + '\r\n Перейдите на страницу входа' ])
+            }
+            else{
+                SetAlertData([true, 'warning', result.message ])
+            }
+
+            
+        })
+        .catch((error) => {
+            console.log({error});
+            SetAlertData([true, 'warning', 'Ошибка при создании пользователя'])
+        });
+    
+    
+    }
+
+
     return (
         <Form>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3" controlId="c1">
             <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" />
+            <Form.Control value={email} onChange={(e)=>setEmail(e.target.value)} type="email" placeholder="Enter email" />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Телефон</Form.Label>
-            <Form.Control type="text" placeholder="+7XXX-XXXXXXX" />
+        <Form.Group className="mb-3" controlId="c2">
+            <Form.Label>Пароль</Form.Label>
+            <Form.Control value={password} onChange={(e)=>{
+              //console.log(password);
+              setPassword(e.target.value);
+            }
+            } type="password"  />
         </Form.Group>
-        <FormGroup>
-            <FormText>Сформированный пароль придет на зарегистированную почту. До публикации объявлений номер телефона нужно будет так же подтвердить</FormText>
-        </FormGroup>
 
-        <br/>
+        {
+        //<FormGroup>
+        //    <FormText>Сформированный пароль придет на зарегистированную почту. До публикации объявлений номер телефона нужно будет так же подтвердить</FormText>
+        //</FormGroup>
+        //<br/>
+        }
 
-        <Button variant="primary" type="submit">
+        <Button onClick={sendData} variant="primary" type="button">
             Отправить
         </Button>
+        <br/>
+        <br/>
+        <Alert key={alertData[1]} variant={alertData[1]} onClose={() => SetAlertData([false,'',''])} show={alertData[0]} dismissible>
+        {alertData[2]}
+        </Alert>
         </Form>
     )
 }
@@ -59,10 +102,8 @@ function SignupFields(){
         
         <Card style={{marginTop:"20px"}}>
         <Card.Body>
-        <Card.Title> SignupPage</Card.Title>
+        <Card.Title> Страница регистрации нового пользователя</Card.Title>
         <SignupFields/>
-
-
         </Card.Body>
         </Card>
 

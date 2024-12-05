@@ -4,7 +4,7 @@ import { Button, Form, Row, Col, Card, Container, Tabs, Tab   } from 'react-boot
 
 //import { LinkContainer } from 'react-router-bootstrap';
 //import {getLocalAuthData} from '../processors/auth'
-import {searchComputers} from '../processors/ApiFunctions.jsx'
+import {searchComputers} from '../processors/ApiFunctions.js'
 
 
 import MainLayout from '../components/MainLayout.jsx'
@@ -48,7 +48,7 @@ function MainPage(){
       <MainLayout>
 	    <div style={{height:"30px"}}></div>
       {
-        /*нем ного отступим сверху*/
+        /* отступим сверху*/
       }
 
     <Container>

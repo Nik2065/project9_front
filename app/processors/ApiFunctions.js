@@ -96,7 +96,7 @@ export async function searchComputers(pMin, pMax, elementsInRow){
 
 
 
-export async function Auth(login, password) {
+export async function Auth(email, password) {
 
     let authResult = {
         success: true,
@@ -109,11 +109,11 @@ export async function Auth(login, password) {
 
     try {
     
-        const url= baseUrl + '/Auth/Token';
+        const url= apiUrl + '/User/Token';
 
         const obj = {
-            username: login,
-            password: password
+            Email: email,
+            Password: password
         };
 
         const result1 = await fetch(url, {
@@ -180,30 +180,27 @@ export async function Auth(login, password) {
 
 
 //создание аккаунта
-/*export async function SignUp(newUserData) {
+export async function SendSignUpData(email, password) {
     
-    try{
 
-        const url= baseUrl + '/Auth/CreateNewUser';
+const url= apiUrl + '/User/SignUp';
 
-        const result1 = await fetch(url, {
-            method:'POST',
-            body: JSON.stringify(newUserData),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-        });
+const o = {
+    Email: email,
+    Password: password
+};
 
+const result1 = await fetch(url, {
+        method:'POST',
+        body: JSON.stringify(o),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+});
 
-
-
-    }
-    catch(error){
-
-    }
-
-}*/
+    return result1;
+}
 
 
 
