@@ -1,7 +1,7 @@
 import { 
     apiUrl, commonHeaders
 } from '../const.js'
-
+import moment from 'moment';
 
 
 
@@ -126,7 +126,7 @@ export async function Auth(email, password) {
         });
 
         
-        //console.log({result1});
+        console.log({result1});
 
 
         if(result1.status === 200){
@@ -173,10 +173,80 @@ export async function Auth(email, password) {
     //if(res.status === 200){
 
     //}
+}
 
+export async function GetToken(email, password) {
+ 
+        let authResult = {
+            success: true,
+            message: "",
+            token: "",
+            expires: null,
+            username: ""
+        };
 
     
+        const url= apiUrl + '/User/Token';
+
+        const obj = {
+            emailAsLogin: email,
+            pwd: password
+        };
+
+        const result1 = await fetch(url, {
+                method:'POST',
+                body: JSON.stringify(obj),
+                headers: commonHeaders
+        });
+    
+        console.log({result1});
+
+        if(result1.status === 200){
+
+            const body = await result1.json();
+            console.log({body});
+
+            authResult.success = true;
+            authResult.token = body.access_token;
+            authResult.expires = body.expires_in;
+            authResult.username = body.login;
+            authResult.message = body.message;
+
+            //
+            const end = moment(body.expires_in);
+            console.log(end);
+        
+            //diff
+            //const diff = moment().add(new Date(), 'seconds');
+            //console.log()
+            const now = new Date();
+            const now1 = moment(now);
+            var duration = moment.duration(end.diff(now1));
+            //var hours = duration.asHours();
+
+            console.log({duration});
+
+            return authResult;
+        }
+        else if(result1.status === 401){
+                authResult.success = false;
+                authResult.token = "";
+                authResult.message = "Ошибка авторизации";
+        
+                return authResult;
+        }
+        else{
+                authResult.success = false;
+                authResult.token = "";
+                authResult.message = "Ошибка";
+        
+            return authResult;
+        }
+
+
+
 }
+
 
 
 //создание аккаунта

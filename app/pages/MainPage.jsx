@@ -17,18 +17,19 @@ function MainPage(){
   const [key, setKey] = useState('perfomancelevel');
 
 
+    useEffect(() => {
+      //const t = localStorage.getItem('token');
+      //console.log({t});
+
+    }, [])
+
+
     /*useEffect(() => {
-      
       searchComputers(0, 5000)
       .then(resp => resp.json())
       .then((result) => {
-
         console.log({result});
-
-
       });
-
-
     }, [])*/
 
     function goToSearch(){

@@ -19,10 +19,17 @@ function SignupFields(){
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [password2, setPassword2] = useState('');
     const [alertData, SetAlertData] = useState([false, 'success', '' ]);
 
     function sendData(){
-    
+        //проверяем что пароли одинаковые 
+
+        if(password.trim() !== password2.trim()) {
+            SetAlertData([true, 'warning', "Пароли не совпадают"]);
+            return;
+        }
+
         SendSignUpData(email, password)
         .then(resp => resp.json())
         .then((result) => {
@@ -47,7 +54,7 @@ function SignupFields(){
 
 
     return (
-        <Form>
+        <Form style={{paddingTop:"10px"}}>
         <Form.Group className="mb-3" controlId="c1">
             <Form.Label>Email address</Form.Label>
             <Form.Control value={email} onChange={(e)=>setEmail(e.target.value)} type="email" placeholder="Enter email" />
@@ -58,6 +65,15 @@ function SignupFields(){
             <Form.Control value={password} onChange={(e)=>{
               //console.log(password);
               setPassword(e.target.value);
+            }
+            } type="password"  />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="c2">
+            <Form.Label>Повторите пароль</Form.Label>
+            <Form.Control value={password2} onChange={(e)=>{
+              //console.log(password);
+              setPassword2(e.target.value);
             }
             } type="password"  />
         </Form.Group>

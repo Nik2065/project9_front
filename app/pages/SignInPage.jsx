@@ -1,34 +1,93 @@
 import React, {useEffect, useState} from 'react';
-import { Button, Form, Row, Col, Card, Container, FormGroup, FormText    } from 'react-bootstrap';
-
+import { Button, Form, Row, Col, Card, Container, Alert   } from 'react-bootstrap';
+import moment from 'moment';
 
 
 import MainLayout from '../components/MainLayout.jsx'
 
-
+import { GetToken } from '../processors/ApiFunctions.js';
 
 
 export default function SignInPage(){
 
 
     function SignInFields(){
+        
+        
+    const [email, setEmail] = useState('mail@mail.ru');
+    const [password, setPassword] = useState('123');
+    const [alertData, SetAlertData] = useState([false, 'success', '' ]);
+
+    function SendDataToGetToken(){
+    
+        GetToken(email, password)
+        .then(authResult => {
+            console.log({authResult});
+            if(authResult.success)
+                localStorage.setItem('token', authResult.expires);
+            else localStorage.removeItem('token');
+        });
+
+        /*.then(resp => resp.json())
+        .then((result) => {
+            console.log({result});
+
+            if(!result.isError){
+                //SetAlertData([true, 'success', result.message + '\r\n Перейдите на страницу входа' ])
+                //если успешно получили токен - то сохраняем его в локалсторадж и переходим на страницы сайта 
+                
+            }
+            else{
+                SetAlertData([true, 'warning', result.message ])
+            }
+
+            
+        })
+        .catch((error) => {
+            console.log({error});
+            SetAlertData([true, 'warning', 'Ошибка при создании пользователя'])
+        });*/
+    
+    
+    }
+
+
+
         return (
             <Form>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
+                <Form.Label>Email </Form.Label>
+                <Form.Control value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Enter email" />
             </Form.Group>
     
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Пароль</Form.Label>
-                <Form.Control type="Password" placeholder="Password" />
+                <Form.Control value={password} onChange={(e) => setPassword(e.target.value)} type="Password" placeholder="Password" />
             </Form.Group>
     
             <br/>
     
-            <Button variant="primary" type="submit">
+            <Button onClick={SendDataToGetToken} variant="primary" type="button">
                 Отправить
             </Button>
+            <Button variant='default' onClick={() => {
+                const exp = localStorage.getItem('token');
+                console.log(exp);
+                if(exp)
+                {
+                    const end = moment(exp);
+                    const start = new Date();
+                    //const duration = moment.duration(end.diff(start));
+                    const duration = end.diff(start, 'second');
+
+                    console.log(duration);
+                }
+
+            }}>click</Button>
+            <br/><br/>
+            <Alert variant={alertData[1]} show={alertData[0]} onClose={()=>SetAlertData([false,'',''])} dismissible>
+                {alertData[2]}
+            </Alert>
             </Form>
         )
     }
