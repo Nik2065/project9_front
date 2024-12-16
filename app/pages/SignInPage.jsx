@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import { Button, Form, Row, Col, Card, Container, Alert   } from 'react-bootstrap';
-import moment from 'moment';
 
 
-import MainLayout from '../components/MainLayout.jsx'
+import SignInLayout from '../components/SignInLayout.jsx'
 
 import { GetToken } from '../processors/ApiFunctions.js';
 
@@ -23,9 +22,13 @@ export default function SignInPage(){
         GetToken(email, password)
         .then(authResult => {
             console.log({authResult});
-            if(authResult.success)
-                localStorage.setItem('token', authResult.expires);
-            else localStorage.removeItem('token');
+            if(authResult.success){
+                localStorage.setItem('token', JSON.stringify(authResult));
+                //переходим на главную страницу
+                window.location.href = '/';
+            }
+            else
+                localStorage.removeItem('token');
         });
 
         /*.then(resp => resp.json())
@@ -71,7 +74,11 @@ export default function SignInPage(){
                 Отправить
             </Button>
             <Button variant='default' onClick={() => {
-                const exp = localStorage.getItem('token');
+                /*const exp =  new Date();
+                const t = localStorage.getItem('token');
+                if(t)
+                    exp = e.expires;
+
                 console.log(exp);
                 if(exp)
                 {
@@ -81,9 +88,10 @@ export default function SignInPage(){
                     const duration = end.diff(start, 'second');
 
                     console.log(duration);
-                }
+                }*/
 
             }}>click</Button>
+
             <br/><br/>
             <Alert variant={alertData[1]} show={alertData[0]} onClose={()=>SetAlertData([false,'',''])} dismissible>
                 {alertData[2]}
@@ -95,7 +103,7 @@ export default function SignInPage(){
     
 
     return (
-        <MainLayout>
+        <SignInLayout>
         <Container>
         
         <Row>
@@ -116,6 +124,6 @@ export default function SignInPage(){
         </Row>
 
         </Container>
-        </MainLayout>
+        </SignInLayout>
     )
 }

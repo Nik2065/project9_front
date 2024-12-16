@@ -11,12 +11,11 @@ import { FaServer  } from "react-icons/fa";
 //import MainFooter from './MainFooter.jsx'
 import { LinkContainer } from 'react-router-bootstrap'
 
-import {GetAuthDataFromStorage} from '../processors/CommonFunctions.js'
+//import {GetAuthDataFromStorage} from '../processors/CommonFunctions.js'
 
-export default function MainLayout({children}){
+export default function SignInLayout({children}){
 
-    const [userName, setUserName] = useState('');
-
+    /*const [userName, setUserName] = useState('');
 
     useEffect(() => {
     
@@ -26,7 +25,7 @@ export default function MainLayout({children}){
       console.log({authData});
       setUserName(authData.username);
 
-    }, []);
+    }, []);*/
 
 
 
@@ -44,25 +43,10 @@ export default function MainLayout({children}){
           </Navbar.Brand>
           </LinkContainer>
         
-
         <Form>
         <Row>
         <Col xs="auto" style={{color:"white", fontSize:"1.2rem"}}>
-        {
-          userName ? 
-          <>
-            <span style={{fontSize:"0.8rem"}}>Вы вошли как: {userName}</span>
-            &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-            <LinkContainer to="/fa">
-              <Button variant="primary"> <BsHeartFill /> Избранное </Button>
-            </LinkContainer>
-            &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-            <LinkContainer to="/">
-              <Button variant="primary"><FaDoorOpen /> Выйти</Button>
-            </LinkContainer>
-          </>
-          :
-          <>
+
             <LinkContainer to="/signin">
               <Button variant="primary"><FaDoorOpen /> Войти</Button>
             </LinkContainer>
@@ -70,8 +54,6 @@ export default function MainLayout({children}){
             <LinkContainer title="Создать аккаунт" to="/signup">
               <Button variant="primary"><FaDoorOpen /> Регистрация</Button>
             </LinkContainer>
-          </>
-        }
 
           </Col>
         </Row>

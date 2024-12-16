@@ -69,7 +69,7 @@ function SignupFields(){
             } type="password"  />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="c2">
+        <Form.Group className="mb-3" controlId="c3">
             <Form.Label>Повторите пароль</Form.Label>
             <Form.Control value={password2} onChange={(e)=>{
               //console.log(password);
