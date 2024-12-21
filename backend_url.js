@@ -1,1 +1,1 @@
-var backend_url = ""
+var backend_url = "http://localhost:5200"

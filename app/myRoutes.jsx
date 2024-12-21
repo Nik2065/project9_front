@@ -13,8 +13,8 @@ import TestPage from "./pages/TestPage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import SignInPage from "./pages/SignInPage.jsx";
 import FavoritePage from "./pages/FavoritePage.jsx";
-
-
+import UserPage from "./pages/UserPage.jsx";
+import CreateProductPage from "./pages/CreateProductPage.jsx";
 
 
 const Test3Page = () => {
@@ -32,6 +32,8 @@ function MyRoutes(){
         <Route exact path="/signup" element={<SignupPage/>}/>
         <Route exact path="/signin" element={<SignInPage/>}/>
         <Route exact path="/fa" element={<FavoritePage/>}/>
+        <Route exact path="/user" element={<UserPage/>}/>
+        <Route exact path="/newproduct" element={<CreateProductPage/>}/>
 
         <Route exact path="/test" element={<TestPage/>}/>
         <Route exact path="/test2" element={<Test3Page/>}/>

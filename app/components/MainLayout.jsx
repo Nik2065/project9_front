@@ -1,8 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import {Container, Navbar, Nav, NavDropdown, Form, Button, Row, Col, Table} from 'react-bootstrap'
+import {Container, Navbar, Nav, Dropdown, Form, Button, Row, Col, Table} from 'react-bootstrap'
 import { BsHeartFill } from "react-icons/bs";
 import { FaDoorOpen } from "react-icons/fa";
-import { FaServer  } from "react-icons/fa";
+import { FaServer, FaUser  } from "react-icons/fa";
 
 //import {getShortReport} from '../processors/ApiFunctions.jsx'
 
@@ -30,6 +30,34 @@ export default function MainLayout({children}){
     }, []);
 
 
+
+
+    function UserMenu(){
+      return(
+        <Dropdown>
+        <Dropdown.Toggle variant="primary" id="dropdown-basic">
+        <span style={{fontSize:"0.8rem"}}>Вы вошли как: {userName}</span>
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+
+        <LinkContainer to="/user">
+            <Dropdown.Item >
+              <FaUser /> Профиль
+              </Dropdown.Item>
+          </LinkContainer>
+
+          <LinkContainer to="/">
+            <Dropdown.Item  >
+              <FaDoorOpen /> Выйти
+              </Dropdown.Item>
+          </LinkContainer>
+        </Dropdown.Menu>
+        </Dropdown>
+      )
+    }
+
+
     return(
         <>
     <header>
@@ -51,15 +79,16 @@ export default function MainLayout({children}){
         {
           userName ? 
           <>
-            <span style={{fontSize:"0.8rem"}}>Вы вошли как: {userName}</span>
-            &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+            <Row>
+            <Col>
             <LinkContainer to="/fa">
               <Button variant="primary"> <BsHeartFill /> Избранное </Button>
             </LinkContainer>
-            &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-            <LinkContainer to="/">
-              <Button variant="primary"><FaDoorOpen /> Выйти</Button>
-            </LinkContainer>
+            </Col>
+            <Col>
+            <UserMenu/>
+            </Col>
+            </Row>
           </>
           :
           <>
