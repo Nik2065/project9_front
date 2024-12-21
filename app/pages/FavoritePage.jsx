@@ -12,7 +12,7 @@ export default function FavoritePage(){
 
     return (
         <MainLayout>
-    
+     
         <Container>
         FavoritePage
     </Container>

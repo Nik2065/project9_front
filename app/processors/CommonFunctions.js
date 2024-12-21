@@ -19,13 +19,25 @@ export function base64ToBlob(base64String, contentType = '') {
     return new Blob([byteArray], { type: contentType });
 }
 
-export function GetAuthDataFromStorage(){
+
+
+export function GetAuthDataFromStorage(mastRedirect){
     
     if(CheckIfTokenExpired())
-        GoToLoginPage();
+    {
+        if(mastRedirect){
+            GoToLoginPage();
+        }
+        
+        return null;
+    }
+
+    //if(CheckIfTokenExpired()){
+    //    GoToLoginPage();
+    //}
+
     
     const r = JSON.parse(localStorage.getItem('token'));
-
     return r;
 }
 

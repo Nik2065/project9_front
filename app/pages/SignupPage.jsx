@@ -97,16 +97,6 @@ function SignupFields(){
     )
 }
 
-
-
-
-
-
-
-
-
-
-
     return (
         <MainLayout>
     

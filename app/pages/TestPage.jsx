@@ -19,6 +19,10 @@ const COMMENTS = [
 
 
 export default function TestPage(){
+
+
+  console.log({backend_url});
+
   const navigate = useNavigate()
 
     //классический пример замыкания

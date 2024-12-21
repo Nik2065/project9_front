@@ -22,12 +22,12 @@ export default function MainLayout({children}){
     
       //проверяем есть ли авторизация,
       //получаем данные пользователя
-      const authData = GetAuthDataFromStorage();
-      console.log({authData});
-      setUserName(authData.username);
-
+      const authData = GetAuthDataFromStorage(false);
+      if(authData){
+        console.log({authData});
+        setUserName(authData.username);
+      }
     }, []);
-
 
 
     return(
