@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {Container, Row, Col, Card, Form, Button, Alert} from 'react-bootstrap'
 import { LinkContainer } from "react-router-bootstrap";
 
 import MainLayout from '../components/MainLayout.jsx'
-
+import {GetCpuList, GetGpuList} from '../processors/ApiFunctions.js'
 
 
 export default function CreateProductPage(){
@@ -15,8 +15,42 @@ export default function CreateProductPage(){
     const [cpu_id, setCpuId] = useState(0);
     const [gpu_id, setGpuId] = useState(0);
 
+    const [cpulist, setCpulist] = useState([]);
+    const [gpulist, setGpulist] = useState([]);
     const [alertData, setAlertData] = useState([true,'success','']);
-    const [creatingProduct, setCreatingProduct] = useState(false);
+    const [creatingProduct, setCreatingProduct] = useState(false);//индикатор загрузки
+
+    useEffect(() => {
+        GetCpuList()
+        .then(resp => resp.json())
+        .then(res => {
+            console.log({res});
+
+            if(!res.isError){
+                setCpulist(res.cpuDtoList)
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        });
+
+        GetGpuList()
+        .then(resp => resp.json())
+        .then(res => {
+            if(!res.IsError){
+                setGpulist(res.gpuDtoList)
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        });
+
+
+    },[]);
+    
+
+
+
 
 
     function sendDataToCreateProduct(){
@@ -26,7 +60,6 @@ export default function CreateProductPage(){
 
     return (
         <MainLayout>
-    
         <Container>
 
        <Row>
@@ -70,7 +103,19 @@ export default function CreateProductPage(){
                 Процессор
             </Form.Label>
             <Col sm="8">
-                <Form.Select  value={cpu_id} onChange={e=>setCpuId(e.target.value)} placeholder="" ></Form.Select>
+                <Form.Select  value={cpu_id} onChange={e=>setCpuId(e.target.value)} placeholder="" >
+                    {
+                        cpulist ? 
+                        cpulist.map((item, k) => {
+                            return (
+                                <option key={item.name} value={item.name}>{item.name}</option>
+                            );
+                            
+                        })
+                        : ""
+                    }
+                    
+                </Form.Select>
             </Col>
         </Form.Group>
         
@@ -79,7 +124,19 @@ export default function CreateProductPage(){
                 Видеокарта
             </Form.Label>
             <Col sm="8">
-                <Form.Select  value={gpu_id} onChange={e=>setGpuId(e.target.value)} placeholder="" ></Form.Select>
+                <Form.Select  value={gpu_id} onChange={e=>setGpuId(e.target.value)} placeholder="" >
+                {
+                        gpulist ? 
+                        gpulist.map((item, k) => {
+                            return (
+                                <option key={item.name} value={item.name}>{item.name}</option>
+                            );
+
+                        })
+                        : ""
+                    }
+
+                </Form.Select>
             </Col>
         </Form.Group>
 

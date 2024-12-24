@@ -91,7 +91,27 @@ export async function searchComputers(pMin, pMax, elementsInRow){
 }
 
 
+export async function GetCpuList(){
+    const url = apiUrl + '/DataList/GetCpuList'
 
+    const result = await fetch(url,{
+        method: "GET",
+        headers: commonHeaders,
+    });
+
+    return result;
+}
+
+export async function GetGpuList(){
+    const url = apiUrl + '/DataList/GetGpuList'
+
+    const result = await fetch(url,{
+        method: "GET",
+        headers: commonHeaders,
+    });
+
+    return result;
+}
 
 
 
