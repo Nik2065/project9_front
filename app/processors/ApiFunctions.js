@@ -1,6 +1,7 @@
 import { 
-    apiUrl, commonHeaders, loginPage
+    apiUrl, 
 } from '../const.js'
+import  {GetAuthDataFromStorage, getAuthHeaders, commonHeaders} from './CommonFunctions.js'
 import moment from 'moment';
 
 
@@ -139,10 +140,7 @@ export async function Auth(email, password) {
         const result1 = await fetch(url, {
                 method:'POST',
                 body: JSON.stringify(obj),
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
+                headers: commonHeaders
         });
 
         
@@ -273,30 +271,27 @@ export async function GetToken(email, password) {
 export async function SendSignUpData(email, password) {
     
 
-const url= apiUrl + '/User/SignUp';
+    const url= apiUrl + '/User/SignUp';
 
-const o = {
-    Email: email,
-    Password: password
-};
+    const o = {
+        Email: email,
+        Password: password
+    };
 
-const result1 = await fetch(url, {
-        method:'POST',
-        body: JSON.stringify(o),
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-});
+    const result1 = await fetch(url, {
+            method:'POST',
+            body: JSON.stringify(o),
+            headers: commonHeaders
+    });
 
     return result1;
 }
 
 
-
+/*
 export async function GetEmployeeList() {
     
-    const url= baseUrl + '/Emplyees/GetEmployeesList';
+    const url= apiUrl + '/Emplyees/GetEmployeesList';
 
     const result = {
         err: false,
@@ -330,77 +325,47 @@ export async function GetEmployeeList() {
 
     return result;
 
-}
+}*/
 
-//пока получаем все чаты пользователя
-export async function GetAuthUserActiveChats(){
 
-    const url= baseUrl + '/Chats/GetAuthUserActiveChats';
-    
-    const result = {
-        err: false,
-        msg: "",
-        chats: []
+export async function SendDataToCreateProduct(title, description,  cost, cpu_id, gpu_id){
+
+    console.log("SendDataToCreateProduct");
+    const h = getAuthHeaders();
+    console.log({h});
+    const url= apiUrl + '/ProductList/CreateProduct';
+
+    const o = {
+        title: title,
+        description: description,
+        cost: cost,
+        cpuId: cpu_id,
+        gpuId: gpu_id
     };
 
-    try{
+    //console.log({o});
 
-        const result1 = await fetch(url, {
-            method:'POST',
-            body: JSON.stringify({}),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-        });
-        
-        if(result1 != null && result1 != undefined)
-        {
-            const json = await result1.json();
-            //console.log({json});
-            result.chats = json.chatViews;
-        }
+    const res = await fetch(url, {
+        method:'POST',
+        body: JSON.stringify(o),
+        headers: h
+    });
 
-    }
-    catch(error){
-        console.error(error);
-        result.err = error;
-    }
-    
+    return res;
+}
+
+export async function GetUserProductsList(options){
+    let url = apiUrl + '/ProductList/GetUserProductsList'
+
+    if(options.page)
+        url = url + '?page=' + options.page;
+
+    console.log({url});
+
+    const result = await fetch(url,{
+        method: "GET",
+        headers: getAuthHeaders(),
+    });
+
     return result;
 }
-
-
-export function GetSecondEmployee(employeeList, loginId){
-
-    //console.log({employeeList});
-    //console.log({loginId});
-
-
-    let secondEmp = {};
-    employeeList.forEach(item1 => {
-        //console.log({item1});
-        if(item1.id != loginId)
-        {
-            Object.assign(secondEmp, item1);
-            return secondEmp;
-        }
-    });
-
-    return secondEmp;
-}
-
-
-export function IsAuthorFunc(employeeList, loginId){
-
-    employeeList.forEach(item1 => {
-        //console.log({item1});
-        if(item1.id == loginId)
-        {
-            return true;
-        }
-    });
-
-    return false;
-}
-

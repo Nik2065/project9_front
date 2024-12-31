@@ -1,9 +1,9 @@
 import { 
-    apiUrl, commonHeaders, loginPage
+    loginPage
 } from '../const.js'
 
 import moment from 'moment';
-import { json } from 'react-router-dom';
+
 
 
 // Function to convert Base64 to Blob
@@ -111,4 +111,26 @@ export function sendAuthGetRequest(url){
 
 
 }
+
+
+
+export const commonHeaders = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+}
+
+
+export const getAuthHeaders=() => {
+    
+    const auth = GetAuthDataFromStorage(true);
+    
+    //console.log({token});
+
+    return {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + auth.token
+    }
+}
+
 

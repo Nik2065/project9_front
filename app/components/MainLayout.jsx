@@ -112,10 +112,10 @@ export default function MainLayout({children}){
     </header>
 
 
-    <main style={{minHeight:"200px"}}>
+    <main style={{minHeight:"200px", paddingBottom:"70px"}}>
     {children}
     </main>
-
+        
         <footer style={{position:"absolute", bottom:"0", width:"100%", height:"60px", lineHeight:"60px", backgroundColor:"grey", boxSizing:"border-box"}}>
           <Container>
           <p className='text-center'>SomeText</p>

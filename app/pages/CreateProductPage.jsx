@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from "react";
-import {Container, Row, Col, Card, Form, Button, Alert} from 'react-bootstrap'
-import { LinkContainer } from "react-router-bootstrap";
+import {Container, Row, Col, Card, Form, Button, Alert, Spinner} from 'react-bootstrap'
+import { alertType } from "../const.js";
 
 import MainLayout from '../components/MainLayout.jsx'
-import {GetCpuList, GetGpuList} from '../processors/ApiFunctions.js'
+import SpinnerButton from "../components/SpinnerButton.jsx";
+import {GetCpuList, GetGpuList, SendDataToCreateProduct} from '../processors/ApiFunctions.js'
 
 
 export default function CreateProductPage(){
@@ -12,13 +13,13 @@ export default function CreateProductPage(){
     const [description, setDescription] = useState('');
     const [cost, setCost] = useState(0);
 
-    const [cpu_id, setCpuId] = useState(0);
-    const [gpu_id, setGpuId] = useState(0);
+    const [cpuId, setCpuId] = useState(0);
+    const [gpuId, setGpuId] = useState(0);
 
     const [cpulist, setCpulist] = useState([]);
     const [gpulist, setGpulist] = useState([]);
-    const [alertData, setAlertData] = useState([true,'success','']);
-    const [creatingProduct, setCreatingProduct] = useState(false);//индикатор загрузки
+    const [alertData, setAlertData] = useState([false,alertType.success,'']);
+    const [crProductAnimation, setCrProductAnimation] = useState(false);//индикатор загрузки
 
     useEffect(() => {
         GetCpuList()
@@ -27,7 +28,13 @@ export default function CreateProductPage(){
             console.log({res});
 
             if(!res.isError){
-                setCpulist(res.cpuDtoList)
+                if(res.cpuDtoList.length > 0){
+                    setCpulist(res.cpuDtoList);
+                    setCpuId(res.cpuDtoList[0].id);
+
+                    console.log(res.cpuDtoList);
+                    console.log(res.cpuDtoList[0].id);
+                }
             }
         })
         .catch(error => {
@@ -37,8 +44,14 @@ export default function CreateProductPage(){
         GetGpuList()
         .then(resp => resp.json())
         .then(res => {
-            if(!res.IsError){
-                setGpulist(res.gpuDtoList)
+            if(!res.isError){
+                if(res.gpuDtoList.length>0){
+                    setGpulist(res.gpuDtoList);
+                    setGpuId(res.gpuDtoList[0].id);
+                    console.log(res.gpuDtoList);
+                    
+                    console.log(res.gpuDtoList[0].id);
+                }
             }
         })
         .catch(error => {
@@ -55,6 +68,27 @@ export default function CreateProductPage(){
 
     function sendDataToCreateProduct(){
 
+        setCrProductAnimation(true);
+
+        SendDataToCreateProduct(title, description, cost, cpuId, gpuId)
+        .then(resp => resp.json())
+        .then(res => {
+            console.log({res});
+
+            setCrProductAnimation(false);
+
+            if(!res.isError){
+                setAlertData([true, alertType.success, res.message])
+            }
+            else
+                setAlertData([true, alertType.warning, res.message]);
+        })
+        .catch(error => {
+            setCrProductAnimation(false);
+            console.log(error)
+        });
+
+
     }
 
 
@@ -64,7 +98,6 @@ export default function CreateProductPage(){
 
        <Row>
         <Col xxl="8" lg="10" sm="12">
-        
         
         <Card style={{marginTop:"20px"}}>
         <Card.Body>
@@ -103,12 +136,12 @@ export default function CreateProductPage(){
                 Процессор
             </Form.Label>
             <Col sm="8">
-                <Form.Select  value={cpu_id} onChange={e=>setCpuId(e.target.value)} placeholder="" >
+                <Form.Select  value={cpuId} onChange={e=>setCpuId(e.target.value)} placeholder="" >
                     {
                         cpulist ? 
                         cpulist.map((item, k) => {
                             return (
-                                <option key={item.name} value={item.name}>{item.name}</option>
+                                <option key={item.id} value={item.id}>{item.name}</option>
                             );
                             
                         })
@@ -124,12 +157,12 @@ export default function CreateProductPage(){
                 Видеокарта
             </Form.Label>
             <Col sm="8">
-                <Form.Select  value={gpu_id} onChange={e=>setGpuId(e.target.value)} placeholder="" >
+                <Form.Select  value={gpuId} onChange={e=>setGpuId(e.target.value)} placeholder="" >
                 {
                         gpulist ? 
                         gpulist.map((item, k) => {
                             return (
-                                <option key={item.name} value={item.name}>{item.name}</option>
+                                <option key={item.id} value={item.id}>{item.name}</option>
                             );
 
                         })
@@ -140,15 +173,15 @@ export default function CreateProductPage(){
             </Col>
         </Form.Group>
 
-        позже будет реализовано добавление фото
+       
         </Form>
 
         <div style={{ paddingTop:"10px"}}>
-        <Alert show={alertData[0]} dismissible="true" variant="success">fjsfkjh</Alert>
+        <Alert onClose={() => setAlertData([false, '', ''])} show={alertData[0]} dismissible="true" variant={alertData[1]}>{alertData[2]}</Alert>
         </div>
 
         <div style={{textAlign:"right", paddingTop:"10px"}}>
-            <Button onClick={()=> sendDataToCreateProduct()}>Создать</Button>
+            <SpinnerButton showAnimation={crProductAnimation} disabled={crProductAnimation} onClick={()=> sendDataToCreateProduct()} />
         </div>
 
 

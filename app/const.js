@@ -7,9 +7,11 @@ export const apiUrl = backend_url;
 //export const apiUrl = '/api';
 //export const frontBaseUrl = 'http://localhost:8082';
 
-export const commonHeaders = {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-}
-
 export const loginPage =  '/signin';
+
+
+export const alertType = {
+        success: 'success', 
+        warning: 'warning'
+    };
+
