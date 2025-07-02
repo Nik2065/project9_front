@@ -36,18 +36,18 @@ export default function MainLayout({children}){
       return(
         <Dropdown>
         <Dropdown.Toggle variant="primary" id="dropdown-basic">
-        <span style={{fontSize:"0.8rem"}}>Вы вошли как: {userName}</span>
+        <span style={{fontSize:"1.2rem"}}>Вы вошли как: {userName}</span>
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
 
-        <LinkContainer to="/user">
+        <LinkContainer to="/user" style={{fontSize:"1.2rem"}}>
             <Dropdown.Item >
               <FaUser /> Профиль
               </Dropdown.Item>
           </LinkContainer>
 
-          <LinkContainer to="/">
+          <LinkContainer to="/" style={{fontSize:"1.2rem"}}>
             <Dropdown.Item  >
               <FaDoorOpen /> Выйти
               </Dropdown.Item>
@@ -61,52 +61,40 @@ export default function MainLayout({children}){
     return(
         <>
     <header>
-    <Navbar className="navbar navbar-expand-lg bg-primary" >
+    <Navbar className="navbar navbar-expand-lg bg-primary"   >
         <Container  >
           <LinkContainer to="/">
-          <Navbar.Brand href="#home">
-            <FaServer style={{color:"white"}} />
-            <span style={{color:"white"}}>
+          <Navbar.Brand   >
+            <FaServer style={{color:"white", fontSize:"1.5em", marginBottom:"10px"}} />
+            <span style={{color:"white", fontSize:"1.5em"}}>
             &nbsp;&nbsp; Compster
             </span>
           </Navbar.Brand>
           </LinkContainer>
-        
+          <Navbar.Toggle />
 
-        <Form>
-        <Row>
-        <Col xs="auto" style={{color:"white", fontSize:"1.2rem"}}>
+        <Navbar.Collapse className="justify-content-end">
         {
           userName ? 
           <>
-            <Row>
-            <Col>
-            <LinkContainer to="/fa">
+            <LinkContainer to="/fa" style={{fontSize:"1.2rem"}}>
               <Button variant="primary"> <BsHeartFill /> Избранное </Button>
             </LinkContainer>
-            </Col>
-            <Col>
             <UserMenu/>
-            </Col>
-            </Row>
           </>
           :
           <>
-            <LinkContainer to="/signin">
+            <LinkContainer to="/signin" style={{fontSize:"1.2rem"}}>
               <Button variant="primary"><FaDoorOpen /> Войти</Button>
             </LinkContainer>
             &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-            <LinkContainer title="Создать аккаунт" to="/signup">
+            <LinkContainer title="Создать аккаунт" to="/signup" style={{fontSize:"1.2rem"}}>
               <Button variant="primary"><FaDoorOpen /> Регистрация</Button>
             </LinkContainer>
           </>
         }
-
-          </Col>
-        </Row>
-      </Form>
+      </Navbar.Collapse>
       </Container>
-
     </Navbar>
 
     </header>

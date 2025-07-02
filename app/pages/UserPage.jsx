@@ -65,12 +65,12 @@ export default function UserPage(){
         <Container>
 
        <Row>
-        <Col xxl="8" lg="10" sm="12">
+        <Col xxl="12" lg="12" sm="12">
         
         
         <Card style={{marginTop:"20px"}}>
         <Card.Body>
-        <Card.Title> Страница пользователя</Card.Title>
+        <Card.Title><h3>Страница пользователя</h3></Card.Title>
         <Row>
             <Col>
             <p>Объявления</p>
@@ -94,7 +94,7 @@ export default function UserPage(){
             <Tabs defaultActiveKey="act" className="mb-3" fill   style={{backgroundColor:"lightgrey"}}>
             
             <Tab eventKey="act" title="Активные">
-            <Table bordered >
+            <Table bordered style={{fontSize:"1.2em"}} >
 
                 <tbody>
                 {
