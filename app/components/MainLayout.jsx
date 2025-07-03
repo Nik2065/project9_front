@@ -10,7 +10,6 @@ import { FaServer, FaUser  } from "react-icons/fa";
 //import TopNavbar from './TopNavbar.jsx'
 //import MainFooter from './MainFooter.jsx'
 import { LinkContainer } from 'react-router-bootstrap'
-
 import {GetAuthDataFromStorage} from '../processors/CommonFunctions.js'
 
 export default function MainLayout({children}){
@@ -47,11 +46,14 @@ export default function MainLayout({children}){
               </Dropdown.Item>
           </LinkContainer>
 
-          <LinkContainer to="/" style={{fontSize:"1.2rem"}}>
-            <Dropdown.Item  >
+          
+            <Dropdown.Item style={{fontSize:"1.2rem"}} onClick={()=> {
+              localStorage.removeItem('token');
+              window.location.href = '/';
+            }} >
               <FaDoorOpen /> Выйти
-              </Dropdown.Item>
-          </LinkContainer>
+            </Dropdown.Item>
+          
         </Dropdown.Menu>
         </Dropdown>
       )

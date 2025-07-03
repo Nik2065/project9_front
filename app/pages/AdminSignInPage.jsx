@@ -7,13 +7,13 @@ import SignInLayout from '../components/SignInLayout.jsx'
 import { GetToken } from '../processors/ApiFunctions.js';
 
 
-export default function SignInPage(){
+export default function AdminSignInPage(){
 
 
-    function SignInFields(){
+    function AdminSignInFields(){
         
         
-    const [email, setEmail] = useState('mail@mail.ru');
+    const [email, setEmail] = useState('admin@mail.ru');
     const [password, setPassword] = useState('123');
     const [alertData, SetAlertData] = useState([false, 'success', '' ]);
 
@@ -112,9 +112,9 @@ export default function SignInPage(){
         
         <Card style={{marginTop:"20px"}}>
         <Card.Body>
-        <Card.Title>Вход в личный кабинет</Card.Title>
+        <Card.Title>Вход в личный кабинет администратора</Card.Title>
         <Card.Text>Введите данные для входа</Card.Text>
-        <SignInFields/>
+        <AdminSignInFields/>
 
 
         </Card.Body>
