@@ -9,7 +9,12 @@ import {searchComputers} from '../processors/ApiFunctions.js'
 
 import MainLayout from '../components/MainLayout.jsx'
 import ProductCard from '../components/ProductCard.jsx'
+//import ProductCard5 from '../components/ProductCard5.jsx'
 import MainPageFilter from '../components/MainPageFilter.jsx'
+
+import FiltersSidebar from '../components/FiltersSidebar.jsx'
+import ProductsList from '../components/ProductsList.jsx';
+
 
 function MainPage(){
 
@@ -54,6 +59,19 @@ function MainPage(){
       {
         /* отступим сверху*/
       }
+
+    <Container>
+      <Row>
+        <Col md={3} className="mb-4">
+          <FiltersSidebar />
+        </Col>
+        <Col md={9}>
+          <ProductsList />
+        </Col>
+      </Row>
+    </Container>
+
+
 
     <Container>
       <Card>
@@ -103,6 +121,10 @@ function MainPage(){
       </Container>
 
     <Container>
+
+
+
+
       <Row>
         <Col sm="2">
           <ProductCard/>
@@ -142,3 +164,5 @@ function MainPage(){
 }
 
 export default MainPage;
+
+

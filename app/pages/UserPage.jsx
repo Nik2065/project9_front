@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from "react";
 import { useSearchParams } from "react-router-dom";
-import {Container, Row, Col, Card, Table, Button, Spinner, Tabs, Tab, Pagination} from 'react-bootstrap'
+import {Container, Row, Col, Card, Table, Button, Spinner, Tabs, Tab, Form} from 'react-bootstrap'
 import { LinkContainer } from "react-router-bootstrap";
 
 import MainLayout from '../components/MainLayout.jsx'
 import {GetUserProductsList} from '../processors/ApiFunctions.js'
+import {ConvertDtToString} from '../processors/CommonFunctions.js'
 import { FaPen } from "react-icons/fa";
 
 import { CPagination } from "../components/CPagination/CPagination.jsx";
@@ -73,7 +74,7 @@ export default function UserPage(){
         <Card.Title><h3>Страница пользователя</h3></Card.Title>
         <Row>
             <Col>
-            <p>Объявления</p>
+            <h4>Объявления</h4>
             </Col>
             <Col sm="4">
                 <LinkContainer to="/newproduct">
@@ -98,14 +99,42 @@ export default function UserPage(){
 
                 <tbody>
                 {
-                    productList.map((item) => { 
+                    productList.map((item) => {
+                        //console.log({item});
+                        
+                        const dt = new Date(item.createdDate);
+                        const newDt = ConvertDtToString(dt);
+
                         return (
                             <tr key={item.id}>
                                 <td>
-                                    <div><small style={{color:"grey"}}>#{item.id}</small></div>
+                                    
                                     <div><span style={{color:"grey"}}>Заголовок:</span>{item.title}</div>
-                                    <div><span style={{color:"grey"}}>Текст объявления:</span>{item.description}</div>
-                                    <div><span style={{color:"grey"}}>Добавлено:</span>{item.created}</div>
+                                    <div>
+                                        <span style={{color:"grey"}}>Текст объявления:</span><br/>
+                                        <Form.Control 
+                                        as="textarea" rows={3} 
+                                        value={item.description}
+                                        readOnly
+                                        style={{fontSize:"1.2rem"}}
+                                        ></Form.Control>
+                                    </div>
+                                    <Card style={{ width: '18rem' }}>
+                                        <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
+                                        <Card.Body>
+                                            
+                                        </Card.Body>
+                                    </Card>
+
+
+                                    <br/>
+                                    <br/>
+                                    <div>
+                                    <span style={{color:"grey"}}>Добавлено:{newDt}</span>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <small style={{color:"grey"}}>#{item.id}</small>
+                                    </div>
+                                    <br/>
                                 </td>
                                 <td>
                                     <LinkContainer to="/">
@@ -148,3 +177,6 @@ export default function UserPage(){
     </MainLayout>
     )
 }
+
+
+

@@ -134,3 +134,35 @@ export const getAuthHeaders=() => {
 }
 
 
+export function ConvertDtToString(dt){
+
+    dt = new Date();
+
+    let result = "";
+    let h = AddZero(dt.getHours());
+    let m = AddZero(dt.getMinutes());
+    let d = AddZero(dt.getDate());
+    let M = dt.getMonth();
+    let y = dt.getFullYear();
+
+    result = h + ":" + m + " " + d + "." + getMonthName(M)+ "." + y;
+    return result;
+}
+
+function AddZero(s){
+    if(s.toString().length == 1)
+        return "0" + s;
+    
+    return s;
+}
+
+function getMonthName(n){
+    if(n === 6)
+        return "июн";
+    if(n === 7)
+        return "июл";
+
+    else return "-1";
+
+
+}
