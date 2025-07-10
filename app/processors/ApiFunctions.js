@@ -92,6 +92,7 @@ export async function searchComputers(pMin, pMax, elementsInRow){
 }
 
 
+
 export async function GetCpuList(){
     const url = apiUrl + '/DataList/GetCpuList'
 
@@ -361,6 +362,29 @@ export async function GetUserProductsList(options){
         url = url + '?page=' + options.page;
 
     console.log({url});
+
+    const result = await fetch(url,{
+        method: "GET",
+        headers: getAuthHeaders(),
+    });
+
+    return result;
+}
+
+export async function GetMainPageProductsList(options){
+    let url = apiUrl + '/ProductList/GetProductsList'
+
+    if(options){
+        url = url + "?priceMin=" + options.priceMin + "&priceMax=" + options.priceMax;
+
+    }
+
+    //if(options.page)
+    //    url = url + '?page=' + options.page;
+
+
+
+    console.log(url);
 
     const result = await fetch(url,{
         method: "GET",

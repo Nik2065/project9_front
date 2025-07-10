@@ -102,7 +102,7 @@ export default function MainLayout({children}){
     </header>
 
 
-    <main style={{minHeight:"200px", paddingBottom:"70px"}}>
+    <main style={{minHeight:"200px", paddingBottom:"70px", backgroundColor:"#cfcfcf"}}>
     {children}
     </main>
         

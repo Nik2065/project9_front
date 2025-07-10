@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Badge} from 'react-bootstrap'
 
-import image1 from '../images/case1.jpg'
+import image1 from '../images/komp1.jpg'
 
 
 export default function ProductCard5({title, description, cpu, gpu}) {

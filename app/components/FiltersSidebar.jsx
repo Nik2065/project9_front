@@ -1,10 +1,18 @@
-import React from 'react';
-import { Form, Button, InputGroup } from 'react-bootstrap';
+import React, {useEffect} from 'react';
+import { Form, Button, InputGroup, Card } from 'react-bootstrap';
+
+
 
 export default function FiltersSidebar() {
+
+
+
+
   return (
-    <>
-      <h5>Фильтры</h5>
+    <Card style={{}}>
+        <Card.Body>
+            <Card.Title><h5>Фильтры</h5></Card.Title>
+      
       <Form>
         <Form.Group className="mb-3">
           <Form.Label>Категория</Form.Label>
@@ -43,6 +51,7 @@ export default function FiltersSidebar() {
           Применить
         </Button>
       </Form>
-    </>
+      </Card.Body>
+    </Card>
   );
 }
